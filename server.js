@@ -17,8 +17,15 @@ dbConnect();
 const app = express();
 
 //middlewares
-app.use(cors({ origin: 'http://localhost:3000', credentials: true })); // Allow credentials
-app.use(express.json());
+const corsOptions = {
+    origin: process.env.NODE_ENV === 'production' 
+      ? 'https://e-commerce-frontend2.vercel.app/' // Replace with your frontend production URL
+      : 'http://localhost:3000', // Local development frontend URL
+    credentials: true, // Allow cookies to be sent with cross-origin requests
+  };
+  
+  app.use(cors(corsOptions));
+  app.use(express.json());
 app.use(cookieParser());
 
 
