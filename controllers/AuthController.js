@@ -31,9 +31,8 @@ export const signup = async (req, res) => {
     const token = generateToken(user);
 
     res.cookie('token', token, {
-      httpOnly: false,  // Cookie is not accessible via JavaScript (security best practice)
-      secure: process.env.NODE_ENV === 'production', // Set to true for HTTPS in production
-      sameSite: 'None', // Must be 'None' for cross-origin requests
+      httpOnly: true,
+    //   secure: process.env.NODE_ENV === 'production',
       maxAge: 24 * 60 * 60 * 1000,
     });
 
@@ -56,10 +55,9 @@ export const login = async (req, res) => {
       const token = generateToken(user);
   
       res.cookie('token', token, {
-        httpOnly: false,  // Cookie is not accessible via JavaScript (security best practice)
-      secure: process.env.NODE_ENV === 'production', // Set to true for HTTPS in production
-      sameSite: 'None', // Must be 'None' for cross-origin requests
-      maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        // secure: process.env.NODE_ENV === 'production',
+        maxAge: 24 * 60 * 60 * 1000,
       });
   
       res.json({ message: 'Logged in successfully', role: user.role });
@@ -84,8 +82,8 @@ export const login = async (req, res) => {
     try {
       // Clear the token from cookies
       res.clearCookie('token', {
-        httpOnly: false,
-        secure: process.env.NODE_ENV === 'production', // Uncomment in production
+        httpOnly: true,
+        // secure: process.env.NODE_ENV === 'production', // Uncomment in production
       });
   
       res.json({ message: 'Logged out successfully' });
