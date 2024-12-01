@@ -18,11 +18,20 @@ const app = express();
 
 //middlewares
 const corsOptions = {
-    origin: process.env.NODE_ENV === 'production' 
-      ? 'https://e-commerce-frontend2.vercel.app' // Replace with your frontend production URL
-      : 'http://localhost:3000', // Local development frontend URL
-    credentials: true, // Allow cookies to be sent with cross-origin requests
-  };
+  origin: (origin, callback) => {
+      const allowedOrigins = [
+          'http://localhost:3000', // Local development
+          'https://e-commerce-frontend2.vercel.app', // Production
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true); // Allow the request
+      } else {
+          callback(new Error('Not allowed by CORS')); // Block the request
+      }
+  },
+  credentials: true,
+};
+
   
   app.use(cors(corsOptions));
   app.use(express.json());
