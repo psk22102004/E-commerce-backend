@@ -2,9 +2,9 @@ import Product from "../models/Product.js";
 
 //create a product
 export const createProduct = async (req, res) => {
-    const { name, description, price, category, images, stock } = req.body;
+    const { name, description, price, category, images, stock , brand , colour } = req.body;
     try {
-        const product = new Product({ name, description, price, category, images, stock });
+        const product = new Product({ name, description, price, category, images, stock , brand , colour });
         await product.save();
         res.json({ product, message: "product created successfully !" });
     } catch (error) {
